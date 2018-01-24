@@ -20,3 +20,30 @@
 	}
 	t.Logf("rsp: %+v", l)
 ```
+
+test中有详细的使用例子
+```go
+func TestOcr_BasePost(t *testing.T) {
+	o := ydocr.NewOcr(appKey, appSecret)
+
+	file, _ := os.Open(filename)
+	f, _ := ioutil.ReadAll(file)
+
+	rsp, err := o.BasePost(f)
+	testCommonLine(t, rsp, err)
+}
+
+func TestOcr_FileOcr(t *testing.T) {
+	o := ydocr.NewOcr(appKey, appSecret)
+	rsp, err := o.FileOcr(filename)
+	testCommonLine(t, rsp, err)
+
+}
+
+func TestOcr_ImageOcr(t *testing.T) {
+	o := ydocr.NewOcr(appKey, appSecret)
+	i, err := fileToImage(filename)
+	rsp, err := o.ImageOcr(&i)
+	testCommonLine(t, rsp, err)
+}
+```
